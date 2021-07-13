@@ -12,50 +12,69 @@ class SerialPortConnection():
 
     def sendMessage(self, message):
         try:
-            self.ser.write(message)
+            data = json.dumps(message)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def readMessage(self):
+    def readMessage(self, message):
         try:    
-            line = self.ser.readline()
+            data = json.dumps(message)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def ejection(self):
+    def ejection(self, message):
         try:
+            data = json.dumps(message)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def enable_engine(self, url, period):
+    def enable_engine(self, url, period, message):
         try:
+            data = json.dumps(message)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def stop(self):
+    def stop(self, message):
         try:
+            data = json.dumps(message)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def software_blocker(self, activity):
+    def software_blocker(self, activity, message):
         try:
+            data = json.dumps(message)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def check_weight(self):
+    def check_weight(self, message):
         try:
+            data=json.dumps(message)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))

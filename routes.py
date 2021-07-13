@@ -3,7 +3,7 @@ from app import app
 from main import SerialPortConnection
 import app_logger
 
-arduino = SerialPortConnection(5, '/dev/ttyUSB1', 9600, 1)  #params, port, baudrate, pause 
+arduino = SerialPortConnection(5, '/dev/ttyUSB0', 9600, 1)  #params, port, baudrate, pause 
 logger = app_logger.get_logger(__name__)
 
 @app.route("/ejection", methods=['GET', 'POST'])
@@ -18,12 +18,13 @@ def ejection():
 def enable_engine():
     try:
         if request.method == 'POST':
+            message = {"command": 'enable_engine', "value":1}
             url = request.form['url']
             period = request.form['period']
             if not url:
                 json_data = request.get_json()
                 url = json_data['url']
-            result = arduino.enable_engine(url, period)
+            result = arduino.enable_engine(url, period, message)
             return {'status':'ok'}
         return render_template('enable_engine.html')
     except Exception as ex:
@@ -32,7 +33,8 @@ def enable_engine():
 @app.route("/stop", methods=['GET', 'POST'])
 def stop():
     try:
-        result = arduino.stop()
+        message = {"command": 'stop', "value":1}
+        result = arduino.stop(message)
         return result
     except Exception as ex:
         logger.error(str(ex))
@@ -41,12 +43,12 @@ def stop():
 def software_blocker():
     try:
         if request.method == 'POST':
+            message = {"command": 'software_blbocker', "value":1}
             activity = request.form.getlist('checkbox')
             if not activity:
                 json_data = request.get_json()
                 activity = json_data['activity']
-            print(activity)
-            result = arduino.software_blocker(activity)
+            result = arduino.software_blocker(activity, message)
             return {'status':'ok'}
         return render_template('software_blocker.html')
     except Exception as ex:
@@ -55,7 +57,8 @@ def software_blocker():
 @app.route("/check_weight", methods=['GET', 'POST'])
 def check_weight():
     try:
-        result = arduino.check_weight()
+        message = {"command": 'check_weight', "value":1}
+        result = arduino.check_weight(message)
         return result
     except Exception as ex:
         logger.error(str(ex))
@@ -64,7 +67,6 @@ def check_weight():
 def json():
     try:
         result = arduino.get_json()
-        #result = {"word1":"hello", "word2":"bro", "word3":"hello", "word4":"bro", "word5":"hello", "word6":"bro", "word7":"hello", "word8":"bro"}
         if request.method == 'POST':
             return result
         return render_template('json.html', json=result)
