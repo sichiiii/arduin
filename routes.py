@@ -3,7 +3,7 @@ from app import app
 from main import SerialPortConnection
 import app_logger
 
-arduino = SerialPortConnection(5, '5', 5, 5)  #params, port, baudrate, pause 
+arduino = SerialPortConnection(5, '/dev/ttyUSB1', 9600, 1)  #params, port, baudrate, pause 
 logger = app_logger.get_logger(__name__)
 
 @app.route("/ejection", methods=['GET', 'POST'])
@@ -64,6 +64,7 @@ def check_weight():
 def json():
     try:
         result = arduino.get_json()
+        #result = {"word1":"hello", "word2":"bro", "word3":"hello", "word4":"bro", "word5":"hello", "word6":"bro", "word7":"hello", "word8":"bro"}
         if request.method == 'POST':
             return result
         return render_template('json.html', json=result)

@@ -36,7 +36,7 @@ h1{
 	background: rgb(52, 56, 61);
 	content: '';
 	top: 44px;
-	margin-left: 20px;
+	margin-left: 10px;
 	z-index: 1;
 }
 #signin label:first-of-type{
@@ -50,7 +50,7 @@ h1{
 #signin  input[type="text"], #signin  input[type="password"], #signin button[type="submit"]{
 	background: rgb(28, 30, 33);
 	box-shadow: inset -100px -100px 0 rgb(28, 30, 33); /*Prevent yellow autofill color*/
-	color: rgb(52, 56, 61);
+	color: rgb(0, 0, 0);
 }
 #signin  input[type="text"], #signin  input[type="password"]{
 	position: relative;
