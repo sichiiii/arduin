@@ -18,14 +18,11 @@ def ejection():
 def enable_engine():
     try:
         if request.method == 'POST':
-            try:
-                url = request.form['url']
-                period = request.form['period']
-                if not url:
-                    json_data = request.get_json()
-                    url = json_data['url']
-            except:
-                print('...')
+            url = request.form['url']
+            period = request.form['period']
+            if not url:
+                json_data = request.get_json()
+                url = json_data['url']
             result = arduino.enable_engine(url, period)
             return {'status':'ok'}
         return render_template('enable_engine.html')
@@ -44,13 +41,10 @@ def stop():
 def software_blocker():
     try:
         if request.method == 'POST':
-            try:
-                activity = request.form.getlist('checkbox')
-                if not activity:
-                    json_data = request.get_json()
-                    activity = json_data['activity']
-            except Exception as ex:
-                print(str(ex))
+            activity = request.form.getlist('checkbox')
+            if not activity:
+                json_data = request.get_json()
+                activity = json_data['activity']
             print(activity)
             result = arduino.software_blocker(activity)
             return {'status':'ok'}
@@ -63,5 +57,15 @@ def check_weight():
     try:
         result = arduino.check_weight()
         return result
+    except Exception as ex:
+        logger.error(str(ex))
+
+@app.route("/json", methods=['GET', 'POST'])
+def json():
+    try:
+        result = arduino.get_json()
+        if request.method == 'POST':
+            return result
+        return render_template('json.html', json=result)
     except Exception as ex:
         logger.error(str(ex))
