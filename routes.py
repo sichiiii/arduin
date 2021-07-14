@@ -70,3 +70,12 @@ def json():
         return render_template('json.html', json=result)
     except Exception as ex:
         logger.error(str(ex))
+
+@app.route("/remoter", methods=['GET', 'POST'])
+def remoter():
+    try:
+        if request.method == 'POST':
+            print('yes')
+        return render_template('remoter.html')
+    except Exception as ex:
+        logger.error(str(ex))

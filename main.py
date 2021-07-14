@@ -28,6 +28,11 @@ class SerialPortConnection():
 
     def ejection(self):
         try:
+            data = {"command":'ejection', "value":"1"}
+            data=json.dumps(data)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
+            print (incoming)
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
@@ -35,6 +40,11 @@ class SerialPortConnection():
 
     def enable_engine(self, url, period):
         try:
+            data = {"command":'enable_engine', "value":"1"}
+            data=json.dumps(data)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
+            print (incoming)
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
@@ -42,6 +52,12 @@ class SerialPortConnection():
 
     def stop(self):
         try:
+            data = {"command":'stop', "value":"1"}
+            data=json.dumps(data)
+            print(data)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
+            print (incoming)
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
@@ -49,6 +65,11 @@ class SerialPortConnection():
 
     def software_blocker(self, activity):
         try:
+            data = {"command":'software_blocker', "value":"1"}
+            data=json.dumps(data)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
+            print (incoming)
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
@@ -56,6 +77,11 @@ class SerialPortConnection():
 
     def check_weight(self):
         try:
+            data = {"command":'check_weight', "value":"1"}
+            data=json.dumps(data)
+            self.ser.write(data.encode('ascii'))
+            incoming = self.ser.readline().decode("utf-8")
+            print (incoming)
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
@@ -63,7 +89,6 @@ class SerialPortConnection():
 
     def get_json(self):
         try:
-            a = []
             data = self.ser.readline().decode("utf-8")
             dict_json = json.loads(data)
             return dict_json
