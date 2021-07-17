@@ -3,7 +3,7 @@ from app import app
 from main import SerialPortConnection
 import app_logger
 
-arduino = SerialPortConnection(5, '/dev/ttyUSB1', 9600, 1)  #params, port, baudrate, pause 
+arduino = SerialPortConnection(5, '/dev/ttyUSB0', 9600, 1)  #params, port, baudrate, pause 
 logger = app_logger.get_logger(__name__)
 
 @app.route("/ejection", methods=['GET', 'POST'])
@@ -77,5 +77,14 @@ def remoter():
         if request.method == 'POST':
             print('yes')
         return render_template('remoter.html')
+    except Exception as ex:
+        logger.error(str(ex))
+
+
+@app.route("/asd", methods=['GET', 'POST'])
+def asd():
+    try:
+        arduino.asd()
+        return 'hi'
     except Exception as ex:
         logger.error(str(ex))
