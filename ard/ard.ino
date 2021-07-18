@@ -4,7 +4,10 @@ void setup() {
   Serial.begin(9600);
 }
 
-
+int analogPinA3 = A3;
+int valA3 = 0;
+int analogPinA5 = A5;
+int valA5 = 0;
 
 void read_command(String json)
 {
@@ -31,7 +34,7 @@ void read_command(String json)
   if (doc["command"] == "enable_engine") 
   {
   digitalWrite(5, HIGH); // sets the digital pin 13 on
-  delay(10000);            // waits for a second
+  delay(10000);     
   digitalWrite(5, LOW);  // sets the digital pin 13 off
   delay(500);
   }  
@@ -59,4 +62,11 @@ void loop() {
   // Start a new line
   Serial.println();
   delay(100);
+
+  
+  valA3 = analogRead(analogPinA3);
+  Serial.println(valA3);
+  valA5 = analogRead(analogPinA5);
+  Serial.println(valA5  );
+  
 }

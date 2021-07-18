@@ -3,7 +3,8 @@ from app import app
 from main import SerialPortConnection
 import app_logger
 
-arduino = SerialPortConnection(5, '/dev/ttyUSB0', 9600, 1)  #params, port, baudrate, pause 
+
+arduino = SerialPortConnection()  #params, port, baudrate, pause 
 logger = app_logger.get_logger(__name__)
 
 @app.route("/ejection", methods=['GET', 'POST'])
