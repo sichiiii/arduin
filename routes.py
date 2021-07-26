@@ -6,6 +6,14 @@ import app_logger
 arduino = SerialPortConnection()
 logger = app_logger.get_logger(__name__)
 
+@app.route("/ejection", methods=['GET', 'POST'])
+def ejection():
+    try:
+        result = arduino.ejection()
+        return result
+    except Exception as ex:
+        logger.error(str(ex))
+
 @app.route("/volume_sensor", methods=['GET', 'POST'])
 def volume_sensor():
     try:
