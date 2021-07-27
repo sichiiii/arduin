@@ -6,6 +6,10 @@ import app_logger
 arduino = SerialPortConnection()
 logger = app_logger.get_logger(__name__)
 
+@app.route("/")
+def index():
+    return 'какой нить текст, из серии здесь будет щбс'
+
 @app.route("/ejection", methods=['GET', 'POST'])
 def ejection():
     try:
