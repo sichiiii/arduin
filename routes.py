@@ -6,9 +6,14 @@ import app_logger
 arduino = SerialPortConnection()
 logger = app_logger.get_logger(__name__)
 
-@app.route("/")
-def index():
-    return 'какой нить текст, из серии здесь будет щбс'
+@app.route("/", methods=['GET', 'POST'])
+def remoter():
+    try:
+        if request.method == 'POST':
+            print('yes')
+        return render_template('remoter.html')
+    except Exception as ex:
+        logger.error(str(ex))
 
 @app.route("/ejection", methods=['GET', 'POST'])
 def ejection():
@@ -98,11 +103,3 @@ def json():
     except Exception as ex:
         logger.error(str(ex))
 
-@app.route("/remoter", methods=['GET', 'POST'])
-def remoter():
-    try:
-        if request.method == 'POST':
-            print('yes')
-        return render_template('remoter.html')
-    except Exception as ex:
-        logger.error(str(ex))
