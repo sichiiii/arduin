@@ -1,6 +1,8 @@
+from io import StringIO
 from flask import app
 import serial, app_logger, json
 from config import Configuration
+from time import sleep
 
 config_path = './config.ini'
 
@@ -107,7 +109,12 @@ class SerialPortConnection():
             data = {"command":'check_weight', "value":"1"}
             data=json.dumps(data)
             self.ser.write(data.encode('ascii'))
-            return {'status':'ok'}
+            sleep(12)
+            income = self.ser.readline()
+            income_d = income.decode()
+            str_weight = income_d.rstrip()
+            weight = float(str_weight) 
+            return weight
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}

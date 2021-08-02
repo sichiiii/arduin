@@ -81,7 +81,6 @@ void loop() {
   
   StaticJsonDocument<200> doc;
 
-  
   doc["status"] = 0;
   doc["test"] = "test";
   doc["data"]["test_input"] = stateButton;

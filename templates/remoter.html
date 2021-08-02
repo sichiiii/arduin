@@ -2,17 +2,20 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  
       <link rel="stylesheet" href="static/css/style3.css">
-
 </head>
-
 <body>
-  <h1 style="color:black", style="font-family:Verdana, Geneva, Tahoma, sans-serif">Меню</h1>
+	<div class="preloader">
+		<div class="preloader__row">
+		  <div class="preloader__item"></div>
+		  <div class="preloader__item"></div>
+		</div>
+	  </div>
+  <h1 style=color: #ecf0f1, style="font-family:Verdana, Geneva, Tahoma, sans-serif">Меню</h1>
 <div id="wrapper">
 	<form id="signin" method="post" action="" autocomplete="off">
-		<label type="text", style="font-family:Verdana, Geneva, Tahoma, sans-serif"> Выберите действие</label>
-		<a href="volume_sensor" class="floating-button">Объем</a>
+		
+		<a href="volume_sensor" style= "left:-33px" class="floating-button">Объем</a>
 		<a href="crusher" class="floating-button">Сминатель</a>
 		<a href="tensa" class="floating-button">Тенза</a>
 		<a href="ejection" class="floating-button">Выброс</a>
@@ -20,9 +23,17 @@
 		<a href="stop" class="floating-button">Остановить</a>
 		<a href="software_blocker" class="floating-button">Блокировщик</a>
 		<a href="check_weight" class="floating-button">Вес</a>
+		<a href="json" class="floating-button">Json</a>
 	</form>
+	<script>
+		window.onload = function () {
+		  document.body.classList.add('loaded_hiding');
+		  window.setTimeout(function () {
+			document.body.classList.add('loaded');
+			document.body.classList.remove('loaded_hiding');
+		  }, 500);
+		}
+	  </script>
 </div>
-  
-  
 </body>
 </html>

@@ -1,11 +1,84 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css');
 
+@font-face{
+	font-family: trial;
+	src: url('/static/font.ttf');
+	font-weight: bold;}
+.preloader {
+	/*фиксированное позиционирование*/
+	position: fixed;
+	/* координаты положения */
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	/* фоновый цвет элемента */
+	background: #e0e0e0;
+	/* размещаем блок над всеми элементами на странице (это значение должно быть больше, чем у любого другого позиционированного элемента на странице) */
+	z-index: 1001;
+  }
+  
+  .preloader__row {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	width: 70px;
+	height: 70px;
+	margin-top: -35px;
+	margin-left: -35px;
+	text-align: center;
+	animation: preloader-rotate 2s infinite linear;
+  }
+  
+  .preloader__item {
+	position: absolute;
+	display: inline-block;
+	top: 0;
+	background-color: #337ab7;
+	border-radius: 100%;
+	width: 35px;
+	height: 35px;
+	animation: preloader-bounce 2s infinite ease-in-out;
+  }
+  
+  .preloader__item:last-child {
+	top: auto;
+	bottom: 0;
+	animation-delay: -1s;
+  }
+  
+  @keyframes preloader-rotate {
+	100% {
+	  transform: rotate(360deg);
+	}
+  }
+  
+  @keyframes preloader-bounce {
+  
+	0%,
+	100% {
+	  transform: scale(0);
+	}
+  
+	50% {
+	  transform: scale(1);
+	}
+  }
+  
+  .loaded_hiding .preloader {
+	transition: 0.3s opacity;
+	opacity: 0;
+  }
+  
+  .loaded .preloader {
+	display: none;
+  }
 *{
 	font-family: 'Open Sans', 'sans-serif', 'FontAwesome';
 }
 body {
-	background: url(https://html5book.ru/wp-content/uploads/2015/07/background39.png);
+	background-color: #34495e;
   }
 h1{
 	color: rgb(255, 255, 255);
@@ -48,9 +121,9 @@ h1{
 	border-bottom-left-radius: 8px;
 }
 #signin  input[type="text"], #signin  input[type="password"], #signin button[type="submit"]{
-	background: rgb(28, 30, 33);
-	box-shadow: inset -100px -100px 0 rgb(28, 30, 33); /*Prevent yellow autofill color*/
-	color: rgb(52, 56, 61);
+	background: #ecf0f1;
+	box-shadow: inset -100px -100px 0 #ecf0f1; /*Prevent yellow autofill color*/
+	color: #ecf0f1;
 }
 #signin  input[type="text"], #signin  input[type="password"]{
 	position: relative;
@@ -71,13 +144,13 @@ h1{
 	position: absolute;
 	width: 52px;
 	height: 52px;
-	color: rgb(52, 56, 61);
+	color: #000000;
 	border-radius: 50px;
 	outline: 0;
 	z-index: 2;
 	top: 19px;
 	right: -24px;
-	border: 6px solid rgb(52, 56, 61);
+	border: 3px solid #000000;
 	font-size: 25px;
 	text-indent: 0px;
 	padding-left: 9px;
@@ -85,19 +158,19 @@ h1{
 	text-align: center;
 }
 #signin button[type="submit"]:hover{
-	color: rgb(0, 126, 165);
-	text-shadow: 0 0 10px rgb(0, 126, 165);
+	color: #2EE59D;
+	text-shadow: 0 0 10px #000000;
 	cursor: pointer;
 }
 #signin p {
-	color: rgb(79, 85, 97);
+	color: #ecf0f1;
 	padding: 0 20px;
 	font-weight: 700;
 	font-size: 12px;
 	margin: 5px 0 0 0;
 }
 #signin p > a{
-	color: rgb(111, 119, 135);
+	color: #000000;
 	text-decoration: none;
 }
 #signin p > a:hover{

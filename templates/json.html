@@ -8,7 +8,22 @@
 </head>
 
 <body>
-  <h1 style="color:black", style="font-family:Verdana, Geneva, Tahoma, sans-serif">Json</h1>
+  <div class="preloader">
+		<div class="preloader__row">
+		  <div class="preloader__item"></div>
+		  <div class="preloader__item"></div>
+		</div>
+    <script>
+      window.onload = function () {
+        document.body.classList.add('loaded_hiding');
+        window.setTimeout(function () {
+        document.body.classList.add('loaded');
+        document.body.classList.remove('loaded_hiding');
+        }, 500);
+      }
+      </script>
+	  </div>
+  <h1 style=color:#ecf0f1, style="font-family:Verdana, Geneva, Tahoma, sans-serif">Json</h1>
 <div id="wrapper">
 	<form id="signin" method="post" action="" autocomplete="off">
 		<label style="color:black" type="text"> {{json}}</label>		  

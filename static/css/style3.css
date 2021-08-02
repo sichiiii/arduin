@@ -1,16 +1,86 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css');
 
+.preloader {
+	/*фиксированное позиционирование*/
+	position: fixed;
+	/* координаты положения */
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	/* фоновый цвет элемента */
+	background: #e0e0e0;
+	/* размещаем блок над всеми элементами на странице (это значение должно быть больше, чем у любого другого позиционированного элемента на странице) */
+	z-index: 1001;
+  }
+  
+  .preloader__row {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	width: 70px;
+	height: 70px;
+	margin-top: -35px;
+	margin-left: -35px;
+	text-align: center;
+	animation: preloader-rotate 2s infinite linear;
+  }
+  
+  .preloader__item {
+	position: absolute;
+	display: inline-block;
+	top: 0;
+	background-color: #337ab7;
+	border-radius: 100%;
+	width: 35px;
+	height: 35px;
+	animation: preloader-bounce 2s infinite ease-in-out;
+  }
+  
+  .preloader__item:last-child {
+	top: auto;
+	bottom: 0;
+	animation-delay: -1s;
+  }
+  
+  @keyframes preloader-rotate {
+	100% {
+	  transform: rotate(360deg);
+	}
+  }
+  
+  @keyframes preloader-bounce {
+  
+	0%,
+	100% {
+	  transform: scale(0);
+	}
+  
+	50% {
+	  transform: scale(1);
+	}
+  }
+  
+  .loaded_hiding .preloader {
+	transition: 0.3s opacity;
+	opacity: 0;
+  }
+  
+  .loaded .preloader {
+	display: none;
+  }
 *{
 	font-family: 'Open Sans', 'sans-serif', 'FontAwesome';
 }
 body {
-	background: url(https://html5book.ru/wp-content/uploads/2015/07/background39.png);
+	background-color: #34495e;
   }
 h1{
 	color: rgb(255, 255, 255);
 	margin: 20px auto 0;
-  right: 1000px;
+    left: 1000px;
+	right: 1015px;
 	width: 1000px;
 	text-align: center;
 }
@@ -19,8 +89,8 @@ h1{
 	width: 320px;
 	left: 50%;
 	margin-left: -100px;
-	top: 25%;
-	margin-top: -75px;
+	top: 20%;
+	margin-top: -70px;
 }
 
 /* === Sign in Form === */
@@ -167,7 +237,7 @@ input:checked + .slider:before {
 }
 
 body {
-  background: url(https://html5book.ru/wp-content/uploads/2015/07/background39.png);
+	background-color: #34495e;
 }
 .floating-button {
   display: inline-block;
@@ -199,5 +269,94 @@ body {
   box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
   color: white;
   transform: translateY(-7px);
+}
+.wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  min-width: 300px;
+  min-height: 60px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  background: #2EE59D;
+  background: linear-gradient(90deg, #2EE59D 0%, #2EE59D 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px #2EE59D;
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+  }
+
+button::before {
+content: '';
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #2EE59D;
+  box-shadow: 0 0 60px #2EE59D;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}
+
+.button:hover, .button:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+button:hover::before, button:focus::before {
+  opacity: 1;
+}
+
+button::after {
+  content: '';
+  width: 30px; height: 30px;
+  border-radius: 100%;
+  border: 6px solid #2EE59D;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+button:hover::after, button:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "Unica One", sans-serif;
+  background: #34495e;
 }
 

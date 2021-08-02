@@ -1,16 +1,35 @@
-from flask import request, json, render_template
+from flask import request, json, render_template, redirect, url_for, flash
 from app import app
 from main import SerialPortConnection
+from config import Configuration
+
 import app_logger
 
+config_path = './config.ini'
+config = Configuration()
+config.load(config_path)
 arduino = SerialPortConnection()
 logger = app_logger.get_logger(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
-def remoter():
+def index():
     try:
         if request.method == 'POST':
-            print('yes')
+            if request.form['submit_button'] == 'Загрузить':
+                #weight = arduino.check_weight()
+                weight = 100
+                max_weight = int(config.get('requirements', 'max_weight'))
+                if weight > max_weight:
+                    arduino.enable_engine()
+                else:
+                    return render_template('index.html', text='Бутылка отсуствует!')
+        return render_template('index.html', text='Положите бутылку в аппарат и нажмите кнопку')
+    except Exception as ex:
+        logger.error(str(ex))
+
+@app.route("/remoter", methods=['GET', 'POST'])
+def remoter():
+    try:
         return render_template('remoter.html')
     except Exception as ex:
         logger.error(str(ex))
