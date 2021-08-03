@@ -58,14 +58,6 @@ def crusher():
     except Exception as ex:
         logger.error(str(ex))
 
-@app.route("/tensa", methods=['GET', 'POST'])
-def tensa():
-    try:
-        result = arduino.tensa()
-        return result
-    except Exception as ex:
-        logger.error(str(ex))
-
 @app.route("/enable_engine", methods=['GET', 'POST'])
 def enable_engine():
     try:
@@ -76,7 +68,7 @@ def enable_engine():
                 json_data = request.get_json()
                 url = json_data['url']
             result = arduino.enable_engine(url, period)
-            return {'status':'ok'}
+            return render_template('json.html', json=result)
         return render_template('enable_engine.html')
     except Exception as ex:
         logger.error(str(ex))
@@ -108,6 +100,14 @@ def software_blocker():
 def check_weight():
     try:
         result = arduino.check_weight()
+        return render_template('json.html', json=result)
+    except Exception as ex:
+        logger.error(str(ex))
+
+@app.route("/check", methods=['GET', 'POST'])
+def check():
+    try:
+        result = arduino.check()
         return result
     except Exception as ex:
         logger.error(str(ex))

@@ -17,22 +17,6 @@ class SerialPortConnection():
         self.ser = serial.Serial(self.port_name, self.baudrate, timeout=int(self.pause)) 
         self.logger = app_logger.get_logger(__name__) 
 
-    def sendMessage(self, message):
-        try:
-            self.ser.write(message)
-            return {'status':'ok'}
-        except Exception as ex:
-            self.logger.error(str(ex))
-            return {'status':'error'}
-
-    def readMessage(self):
-        try:    
-            line = self.ser.readline()
-            return {'status':'ok'}
-        except Exception as ex:
-            self.logger.error(str(ex))
-            return {'status':'error'}
-
     def volume_sensor(self):
         try:
             data = {"command":'volume_sensor', "value":"1"}
@@ -45,17 +29,7 @@ class SerialPortConnection():
 
     def crusher(self):
         try:
-            data = {"command":'crusher', "value":"1"}
-            data=json.dumps(data)
-            self.ser.write(data.encode('ascii'))
-            return {'status':'ok'}
-        except Exception as ex:
-            self.logger.error(str(ex))
-            return {'status':'error'}
-
-    def tensa(self):
-        try:
-            data = {"command":'tensa', "value":"1"}
+            data = {"command":'blade', "value":"1"}
             data=json.dumps(data)
             self.ser.write(data.encode('ascii'))
             return {'status':'ok'}
@@ -65,7 +39,7 @@ class SerialPortConnection():
 
     def ejection(self):
         try:
-            data = {"command":'ejection', "value":"1"}
+            data = {"command":'escape', "value":"1"}
             data=json.dumps(data)
             self.ser.write(data.encode('ascii'))
             return {'status':'ok'}
@@ -75,10 +49,12 @@ class SerialPortConnection():
 
     def enable_engine(self, url, period):
         try:
-            data = {"command":'enable_engine', "value":"1"}
+            data = {"command":'conveer', "value":"1"}
             data=json.dumps(data)
             self.ser.write(data.encode('ascii'))
-            return {'status':'ok'}
+            data = self.ser.readline().decode("utf-8")
+            print(data)
+            return data
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
@@ -106,25 +82,40 @@ class SerialPortConnection():
 
     def check_weight(self):
         try:
-            data = {"command":'check_weight', "value":"1"}
+            data = {"command":'weight', "value":"1"}
             data=json.dumps(data)
             self.ser.write(data.encode('ascii'))
-            sleep(12)
+            sleep(1)
             income = self.ser.readline()
             income_d = income.decode()
-            str_weight = income_d.rstrip()
-            weight = float(str_weight) 
+            print(income_d)
+            weight = float(income_d['weight']) 
             return weight
+        except Exception as ex:
+            self.logger.error(str(ex))
+            return {'status':'error'}
+
+    def check(self):
+        try:
+            data = {"command":'check', "value":"1"}
+            data=json.dumps(data)
+            self.ser.write(data.encode('ascii'))
+            sleep(1)
+            data = self.ser.readline().decode("utf-8")
+            return data
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
     def get_json(self):
         try:
+            data = {"command":'check_weight', "value":"1"}
+            data=json.dumps(data)
+            self.ser.write(data.encode('ascii'))
+            sleep(1)
             data = self.ser.readline().decode("utf-8")
-            dict_json = json.loads(data)
-            return dict_json
+            print(data)
+            return data
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
-
