@@ -17,21 +17,23 @@ class SerialPortConnection():
         self.ser = serial.Serial(self.port_name, self.baudrate, timeout=int(self.pause)) 
         self.logger = app_logger.get_logger(__name__) 
 
-    def volume_sensor(self):
+    def conveer(self, url, period):
         try:
-            data = {"command":'volume_sensor', "value":"1"}
+            data = {"command":'conveer'}
             data=json.dumps(data)
             self.ser.write(data.encode('ascii'))
+            self.ser.flush()
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def crusher(self):
+    def blade(self):
         try:
-            data = {"command":'blade', "value":"1"}
+            data = {"command":'blade'}
             data=json.dumps(data)
             self.ser.write(data.encode('ascii'))
+            self.ser.flush()
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
@@ -39,83 +41,63 @@ class SerialPortConnection():
 
     def ejection(self):
         try:
-            data = {"command":'escape', "value":"1"}
+            data = {"command":"escape"}
             data=json.dumps(data)
             self.ser.write(data.encode('ascii'))
+            self.ser.flush()
             return {'status':'ok'}
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def enable_engine(self, url, period):
+    def weight(self):
         try:
-            data = {"command":'conveer', "value":"1"}
-            data=json.dumps(data)
-            self.ser.write(data.encode('ascii'))
             data = self.ser.readline().decode("utf-8")
-            print(data)
-            return data
-        except Exception as ex:
-            self.logger.error(str(ex))
-            return {'status':'error'}
-
-    def stop(self):
-        try:
-            data = {"command":'stop', "value":"1"}
-            data=json.dumps(data)
-            print(data)
-            self.ser.write(data.encode('ascii'))
-            return {'status':'ok'}
-        except Exception as ex:
-            self.logger.error(str(ex))
-            return {'status':'error'}
-
-    def software_blocker(self, activity):
-        try:
-            data = {"command":'software_blocker', "value":"1"}
-            data=json.dumps(data)
-            self.ser.write(data.encode('ascii'))
-            return {'status':'ok'}
-        except Exception as ex:
-            self.logger.error(str(ex))
-            return {'status':'error'}
-
-    def check_weight(self):
-        try:
-            data = {"command":'weight', "value":"1"}
-            data=json.dumps(data)
-            self.ser.write(data.encode('ascii'))
-            sleep(1)
-            income = self.ser.readline()
-            income_d = income.decode()
-            print(income_d)
-            weight = float(income_d['weight']) 
-            return weight
+            final_string = ''
+            for i in data:
+                final_string = final_string + i
+                if i == '}':
+                    break
+            print(final_string)
+            final = json.loads(final_string)
+            return final['weight']
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
     def check(self):
         try:
-            data = {"command":'check', "value":"1"}
-            data=json.dumps(data)
-            self.ser.write(data.encode('ascii'))
-            sleep(1)
             data = self.ser.readline().decode("utf-8")
-            return data
+            final_string = ''
+            for i in data:
+                final_string = final_string + i
+                if i == '}':
+                    break
+            print(final_string)
+            final = json.loads(final_string)
+            return final['check']
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
 
-    def get_json(self):
-        try:
-            data = {"command":'check_weight', "value":"1"}
-            data=json.dumps(data)
-            self.ser.write(data.encode('ascii'))
-            sleep(1)
-            data = self.ser.readline().decode("utf-8")
-            print(data)
-            return data
-        except Exception as ex:
-            self.logger.error(str(ex))
-            return {'status':'error'}
+#    def stop(self):
+#        try:
+#            data = {"command":'stop', "value":"1"}
+#            data=json.dumps(data)
+#            print(data)
+#            self.ser.write(data.encode('ascii'))
+#            return {'status':'ok'}
+#        except Exception as ex:
+#            self.logger.error(str(ex))
+#            return {'status':'error'}
+#
+#    def software_blocker(self, activity):
+#        try:
+#            data = {"command":'software_blocker', "value":"1"}
+#            data=json.dumps(data)
+#            self.ser.write(data.encode('ascii'))
+#            return {'status':'ok'}
+#        except Exception as ex:
+#            self.logger.error(str(ex))
+#            return {'status':'error'}
+

@@ -8,49 +8,51 @@ int digitalD6 = 6;
 int analogA5 = A5;
 int digitalD3 = 3;
 
+float val1 = 0.0;
+bool val2 = 0;
+
+StaticJsonDocument<200> flask;
+StaticJsonDocument<200> sensors;
+
 void setup() {
   Serial.begin(9600);
   pinMode(digitalD5, OUTPUT);
   pinMode(digitalD7, OUTPUT);
   pinMode(digitalD6, OUTPUT);
-  pinMode(analogA5, OUTPUT);
-  pinMode(digitalD3, OUTPUT);
-  while(!Serial){
-  }
+  pinMode(analogA5, INPUT);
+  pinMode(digitalD3, INPUT);
 }
 
 void loop() {
-      int     size_ = 0;
-      String  payload;
-      while ( !Serial.available()  ){}
-      if ( Serial.available() )
-        payload = Serial.readStringUntil( '\n' );
-      StaticJsonDocument<512> doc;
-    
-      DeserializationError   error = deserializeJson(doc, payload);
-      if (error) {
-        Serial.println(error.c_str()); 
-        return;
-      }
-      String command = doc["command"];
-      
-      if(doc["command"] == "conveer") {
-        Serial.println("{\"value\":\"conveer has been received\"}");
-      }
-      if(doc["command"] == "blade") {
-        Serial.println("blade has been received");
-      }
-      if(doc["command"] == "escape") {
-        Serial.println("escaoe has been received");
-      }
-      if(doc["command"] == "weight") {
-        Serial.println(123);
-      }
-      if(doc["command"] == "check") {
-        Serial.println("check has been received");
-      }
-      //serializeJson(doc, Serial);
-      //Serial.println("not");
-      delay(100);
-    }
+       deserializeJson(sensors, Serial);
+       deserializeJson(flask, Serial);
+       
+       if (flask["command"] == "conveer"){
+            digitalWrite(digitalD5, LOW);
+            delay(5);
+            digitalWrite(digitalD7, LOW);
+            delay(5);
+            digitalWrite(digitalD5, HIGH);   
+       }
+       if (flask["command"] == "blade"){
+            digitalWrite(digitalD5, LOW);
+            delay(5);
+            digitalWrite(digitalD7, LOW);
+            delay(5);
+            digitalWrite(digitalD7, HIGH);       
+       }
+       if (flask["command"] == "escape"){
+            digitalWrite(digitalD5, LOW);
+            delay(5);
+            digitalWrite(digitalD7, LOW);
+            delay(5);
+            digitalWrite(digitalD6, HIGH);  
+       }            
+       val1 = analogRead(analogA5);     
+       val2 = digitalRead(digitalD3);
+       sensors["weight"] = val1;
+       sensors["check"] = val2; 
+       serializeJson(sensors, Serial);
+}
+
   
