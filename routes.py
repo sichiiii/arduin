@@ -21,7 +21,7 @@ def index():
                 max_weight = int(config.get('requirements', 'max_weight'))
                 if weight < max_weight:
                     arduino.conveer(1, 1)
-                    return render_template('index.html', text='ok')
+                    return render_template('index.html', text='ОПЕРАЦИЯ УСПЕШНА')
                 elif weight < 10:
                     return render_template('index.html', text='Бутылка отсуствует!')
                 else:

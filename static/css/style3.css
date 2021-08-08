@@ -79,7 +79,7 @@ body {
 h1{
 	color: rgb(255, 255, 255);
 	margin: 20px auto 0;
-    left: 1000px;
+  left: 1000px;
 	right: 1015px;
 	width: 1000px;
 	text-align: center;
@@ -87,7 +87,7 @@ h1{
 #wrapper{
 	position: absolute;
 	width: 320px;
-	left: 50%;
+	left: 49.7%;
 	margin-left: -100px;
 	top: 20%;
 	margin-top: -70px;
@@ -359,4 +359,8 @@ body {
   font-family: "Unica One", sans-serif;
   background: #34495e;
 }
+h1 { color: rgb(255, 255, 255); font-family: 'Open Sans Condensed', sans-serif; font-size: 64px; font-weight: 700; line-height: 64px; padding: 25px 30px; text-align: center; text-transform: uppercase; 
+	right: 1000px;
+	width: 1000px;}
+
 

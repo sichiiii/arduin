@@ -176,3 +176,6 @@ h1{
 #signin p > a:hover{
 	border-bottom: 1px solid;
 }
+h1 { color: rgb(255, 255, 255); font-family: 'Open Sans Condensed', sans-serif; font-size: 64px; font-weight: 700; line-height: 64px; padding: 25px 30px; text-align: center; text-transform: uppercase; 
+	right: 1000px;
+	width: 1000px;}
