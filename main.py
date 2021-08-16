@@ -17,7 +17,7 @@ class SerialPortConnection():
         self.ser = serial.Serial(self.port_name, self.baudrate, timeout=int(self.pause)) 
         self.logger = app_logger.get_logger(__name__) 
 
-    def conveer(self, url, period):
+    def conveer(self, period):
         try:
             data = {"command":'conveer'}
             data=json.dumps(data)
@@ -73,7 +73,6 @@ class SerialPortConnection():
                 final_string = final_string + i
                 if i == '}':
                     break
-            print(final_string)
             final = json.loads(final_string)
             return final['check']
         except Exception as ex:

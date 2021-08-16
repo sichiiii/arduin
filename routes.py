@@ -18,9 +18,9 @@ def index():
         if request.method == 'POST':
             if request.form['submit_button'] == 'Загрузить':
                 weight = float(arduino.weight())
-                max_weight = int(config.get('requirements', 'max_weight'))
+                max_weight = float(config.get('requirements', 'max_weight'))
                 if weight < max_weight:
-                    arduino.conveer(1, 1)
+                    arduino.conveer(1)
                     return render_template('index.html', text='ОПЕРАЦИЯ УСПЕШНА')
                 elif weight < 10:
                     return render_template('index.html', text='Бутылка отсуствует!')
@@ -29,6 +29,7 @@ def index():
         return render_template('index.html', text='Положите бутылку в аппарат и нажмите кнопку')
     except Exception as ex:
         logger.error(str(ex))
+        return render_template('error.html', text=str(ex))
 
 @app.route("/remoter", methods=['GET', 'POST'])
 def remoter():
@@ -36,59 +37,75 @@ def remoter():
         return render_template('remoter.html')
     except Exception as ex:
         logger.error(str(ex))
+        return render_template('error.html', text=str(ex))
 
 @app.route("/conveer", methods=['GET', 'POST'])
 def enable_engine():
     try:
         if request.method == 'POST':
-            url = request.form['url']
             period = request.form['period']
-            if not url:
-                json_data = request.get_json()
-                url = json_data['url']
-            result = arduino.conveer(url, period)
+            if not period or period == '':
+                return render_template('error.html', text='Введите корректный период')
+            result = arduino.conveer(period)
             return render_template('json.html', json=result)
         return render_template('enable_engine.html')
     except Exception as ex:
         logger.error(str(ex))
+        return render_template('error.html', text=str(ex))
 
 @app.route("/blade", methods=['GET', 'POST'])
 def blade():
     try:
         result = arduino.blade()
+        if result['status'] == 'ok':
+            result = 'Операция успешна'
+        else:
+            result = 'Операция не проведена'
         if request.method == 'GET':
             return render_template('json.html', json=result, title = 'Резак')
         return result
     except Exception as ex:
         logger.error(str(ex))
+        return render_template('error.html', text=str(ex))
 
 @app.route("/ejection", methods=['GET', 'POST'])
 def ejection():
     try:
         result = arduino.ejection()
+        if result['status'] == 'ok':
+            result = 'Операция успешна'
+        else:
+            result = 'Операция не проведена'
         if request.method == 'GET':
             return render_template('json.html', json=result, title = 'Выброс')
         return result
     except Exception as ex:
         logger.error(str(ex))
+        return render_template('error.html', text=str(ex))
 
 @app.route("/weight", methods=['GET', 'POST'])
 def check_weight():
     try:
         result = arduino.weight()
-        return render_template('json.html', json=result, title = 'Вес')
+        return render_template('json.html', json=str(result)+' грамм', title = 'Вес')
     except Exception as ex:
         logger.error(str(ex))
+        return render_template('error.html', text=str(ex))
 
 @app.route("/check", methods=['GET', 'POST'])
 def check():
     try:
         result = arduino.check()
+        if result == True:
+            result = 'Бутылка в аппарате'
+        else:
+            result = 'Бутылка отсутствует'
         if request.method == 'GET':
             return render_template('json.html', json=result, title = 'Наличие')
         return result
     except Exception as ex:
         logger.error(str(ex))
+        return render_template('error.html', text=str(ex))
 
 #@app.route("/stop", methods=['GET', 'POST'])
 #def stop():
