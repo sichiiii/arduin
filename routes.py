@@ -107,14 +107,21 @@ def check():
         logger.error(str(ex))
         return render_template('error.html', text=str(ex))
 
-#@app.route("/stop", methods=['GET', 'POST'])
-#def stop():
-#    try:
-#        result = arduino.stop()
-#        return result
-#    except Exception as ex:
-#        logger.error(str(ex))
-#
+@app.route("/stop", methods=['GET', 'POST'])
+def stop():
+    try:
+        result = arduino.stop()
+        if result['status'] == 'ok':
+            result = 'Операция успешна'
+        else:
+            result = 'Операция не проведена'
+        if request.method == 'GET':
+            return render_template('json.html', json=result, title = 'Стоп')
+        return result
+    except Exception as ex:
+        logger.error(str(ex))
+        return render_template('error.html', text=str(ex))
+
 #@app.route("/software_blocker", methods=['GET', 'POST'])
 #def software_blocker():
 #    try:
