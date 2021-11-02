@@ -89,14 +89,3 @@ class SerialPortConnection():
         except Exception as ex:
             self.logger.error(str(ex))
             return {'status':'error'}
-
-#    def software_blocker(self, activity):
-#        try:
-#            data = {"command":'software_blocker', "value":"1"}
-#            data=json.dumps(data)
-#            self.ser.write(data.encode('ascii'))
-#            return {'status':'ok'}
-#        except Exception as ex:
-#            self.logger.error(str(ex))
-#            return {'status':'error'}
-

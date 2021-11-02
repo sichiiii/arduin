@@ -121,20 +121,3 @@ def stop():
     except Exception as ex:
         logger.error(str(ex))
         return render_template('error.html', text=str(ex))
-
-#@app.route("/software_blocker", methods=['GET', 'POST'])
-#def software_blocker():
-#    try:
-#        if request.method == 'POST':
-#            activity = request.form.getlist('checkbox')
-#            if not activity:
-#                json_data = request.get_json()
-#                activity = json_data['activity']
-#            print(activity)
-#            result = arduino.software_blocker(activity)
-#            return {'status':'ok'}
-#        return render_template('software_blocker.html')
-#    except Exception as ex:
-#        logger.error(str(ex))
-
-
