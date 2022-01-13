@@ -28,35 +28,30 @@ void loop() {
        deserializeJson(flask, Serial);
        
        if (flask["command"] == "conveer"){
-            digitalWrite(conveer_D5, LOW);
-            delay(5);
+            digitalWrite(escape_D6, LOW);
             digitalWrite(blade_D7, LOW);
-            delay(5);
             digitalWrite(conveer_D5, HIGH);   
        }
        if (flask["command"] == "blade"){
             digitalWrite(conveer_D5, LOW);
-            delay(5);
             digitalWrite(blade_D7, LOW);
-            delay(5);
             digitalWrite(blade_D7, HIGH);       
        }
        if (flask["command"] == "escape"){
             digitalWrite(conveer_D5, LOW);
-            delay(5);
             digitalWrite(blade_D7, LOW);
-            delay(5);
             digitalWrite(escape_D6, HIGH);  
        }
        if (flask["command"] == "stop"){
-            pinMode(conveer_D5, INPUT);
-            pinMode(blade_D7, INPUT);
-            pinMode(escape_D6, INPUT);
+            digitalWrite(conveer_D5, LOW);
+            digitalWrite(blade_D7, LOW);
+            digitalWrite(escape_D6, LOW);
        }
        val1 = analogRead(tensa_A5);     
        val2 = digitalRead(check_D3);
        sensors["weight"] = val1;
-       sensors["check"] = val2; 
+       sensors["check"] = val2;
+       delay(100); 
        serializeJson(sensors, Serial);
 }
 
