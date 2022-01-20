@@ -17,10 +17,9 @@ class SerialPortConnection():
         self.ser = serial.Serial(self.port_name, self.baudrate, timeout=int(self.pause)) 
         self.logger = app_logger.get_logger(__name__) 
 
-    def conveer(self, period):
+    def conveer(self):
         try:
-            data = {"command":'conveer'}
-            data=json.dumps(data)
+            data = 'conveer'
             self.ser.write(data.encode('ascii'))
             self.ser.flush()
             return {'status':'ok'}
@@ -30,8 +29,7 @@ class SerialPortConnection():
 
     def blade(self):
         try:
-            data = {"command":'blade'}
-            data=json.dumps(data)
+            data = 'blade'
             self.ser.write(data.encode('ascii'))
             self.ser.flush()
             return {'status':'ok'}
@@ -41,8 +39,7 @@ class SerialPortConnection():
 
     def ejection(self):
         try:
-            data = {"command":"escape"}
-            data=json.dumps(data)
+            data = 'escape'
             self.ser.write(data.encode('ascii'))
             self.ser.flush()
             return {'status':'ok'}
@@ -81,9 +78,8 @@ class SerialPortConnection():
 
     def stop(self):
         try:
-            data = {"command":'stop'}
+            data = 'stop'
             data=json.dumps(data)
-            print(data)
             self.ser.write(data.encode('ascii'))
             return {'status':'ok'}
         except Exception as ex:

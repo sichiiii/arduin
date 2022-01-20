@@ -1,7 +1,5 @@
 #include <ArduinoJson.h>
 
-String inData;
-
 int conveer_D5 = 5;
 int blade_D7 = 7;
 int escape_D6 = 6;
@@ -23,26 +21,24 @@ void setup() {
   pinMode(check_D3, INPUT);
 }
 
-void loop() {
-       deserializeJson(sensors, Serial);
-       deserializeJson(flask, Serial);
-       
-       if (flask["command"] == "conveer"){
-            digitalWrite(escape_D6, LOW);
-            digitalWrite(blade_D7, LOW);
-            digitalWrite(conveer_D5, HIGH);   
-       }
-       if (flask["command"] == "blade"){
+void loop() { 
+       String command = Serial.readString();
+       if (command == "conveer"){
+            digitalWrite(conveer_D5, HIGH);
+            delay(5000);   
             digitalWrite(conveer_D5, LOW);
-            digitalWrite(blade_D7, LOW);
-            digitalWrite(blade_D7, HIGH);       
        }
-       if (flask["command"] == "escape"){
-            digitalWrite(conveer_D5, LOW);
-            digitalWrite(blade_D7, LOW);
+       if (command == "blade"){
+            digitalWrite(blade_D7, HIGH);
+            delay(5000); 
+            digitalWrite(blade_D7, LOW);       
+       }
+       if (command == "escape"){
             digitalWrite(escape_D6, HIGH);  
+            delay(5000); 
+            digitalWrite(escape_D6, LOW);
        }
-       if (flask["command"] == "stop"){
+       if (command == "stop"){
             digitalWrite(conveer_D5, LOW);
             digitalWrite(blade_D7, LOW);
             digitalWrite(escape_D6, LOW);
@@ -51,7 +47,7 @@ void loop() {
        val2 = digitalRead(check_D3);
        sensors["weight"] = val1;
        sensors["check"] = val2;
-       delay(100); 
+       delay(500); 
        serializeJson(sensors, Serial);
 }
 

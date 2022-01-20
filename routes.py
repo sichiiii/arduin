@@ -40,15 +40,14 @@ def remoter():
         return render_template('error.html', text=str(ex))
 
 @app.route("/conveer", methods=['GET', 'POST'])
-def enable_engine():
+def conveer():
     try:
-        if request.method == 'POST':
-            period = request.form['period']
-            if not period or period == '':
-                return render_template('error.html', text='Введите корректный период')
-            result = arduino.conveer(period)
-            return render_template('json.html', json=result)
-        return render_template('enable_engine.html')
+        result = arduino.conveer()
+        if result['status'] == 'ok':
+            result = 'Операция успешна'
+        else:
+            result = 'Операция не проведена'
+        return render_template('json.html', json=result)
     except Exception as ex:
         logger.error(str(ex))
         return render_template('error.html', text=str(ex))
@@ -84,7 +83,7 @@ def ejection():
         return render_template('error.html', text=str(ex))
 
 @app.route("/weight", methods=['GET', 'POST'])
-def check_weight():
+def weight():
     try:
         result = arduino.weight()
         return render_template('json.html', json=str(result)+' грамм', title = 'Вес')

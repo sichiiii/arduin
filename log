@@ -1,0 +1,6 @@
+2021-11-02 10:09:29,228 - [ERROR] - main - (main.py).stop(90) - write failed: [Errno 5] Input/output error
+2021-11-02 10:09:38,864 - [ERROR] - main - (main.py).stop(90) - write failed: [Errno 5] Input/output error
+2021-11-02 10:09:48,362 - [ERROR] - main - (main.py).stop(90) - write failed: [Errno 5] Input/output error
+2022-01-20 17:46:12,877 - [ERROR] - main - (main.py).check(79) - Expecting value: line 1 column 1 (char 0)
+2022-01-20 18:14:49,442 - [ERROR] - main - (main.py).conveer(29) - unicode strings are not supported, please encode to bytes: 'ascii'
+2022-01-20 18:15:23,154 - [ERROR] - main - (main.py).conveer(29) - unicode strings are not supported, please encode to bytes: '"{\\"command\\":\\"conveer\\"\\"}"'
